@@ -1,0 +1,39 @@
+body {
+    background-color: lightcyan;
+}
+
+.nav {
+    position: sticky;
+}
+
+.app-container {
+    position: relative;
+    top: 100px;
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+    grid-auto-rows: minmax(400px, auto);
+    grid-column-gap: 10px;
+    grid-row-gap: 60px;
+}
+
+.sidebar-holder{
+    grid-column: 1;
+    grid-row: 1 / -1;
+    height: 200px;
+    position: sticky;
+    top: 100px;
+}
+.sidebar-holder ul{
+}
+
+.sidebar-holder il{
+    display: block;
+    list-style-type: disc;
+    margin: 1em 0 1em;
+    padding-left: 40px;
+}
+
+.card-container{
+    grid-column-start: 2;
+    grid-row: auto;
+}
