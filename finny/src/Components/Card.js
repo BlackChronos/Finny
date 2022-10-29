@@ -5,6 +5,7 @@ import './Card.css'
 
 function Card({link, card_content}) {
 
+    const id = card_content.id;
     const image_src = card_content.image_src;
     const title = card_content.title;
     const description = card_content.description;
@@ -13,6 +14,9 @@ function Card({link, card_content}) {
     const tags = card_content.tags;
 
     const tagList = tags.split(' ');
+
+
+    //TODO: Add mobile variant
 
     return (
         <div className='card-container'>
@@ -23,10 +27,10 @@ function Card({link, card_content}) {
                 <div className='tag-list'>
                     {tagList.map(value => <i className='tag'>{value}</i>)}
                 </div>
-                <h4 className='card-title'>{title}</h4>
+                <h4 className='card-title'>{title} {id}</h4>
                 <p className='card-description'>{description}</p>
             </div>
-            <div class="author">
+            <div className="author">
                 <img src={pfp_src} alt='Author' className='author-pfp'/>
                 <i className='card-author'>{author_name}</i>
             </div>

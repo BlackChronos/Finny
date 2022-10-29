@@ -1,15 +1,116 @@
 import Navbar from "./Components/Navbar";
 import {
     BrowserRouter as Router,
-    Routes,
-    Route,
+    Routes, Route,
+    Navigate,
 } from "react-router-dom";
 import './App.css'
 import Card from "./Components/Card";
+import Page_404 from "./Pages/Page404";
+import {useEffect, useState} from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 
 function App() {
-    const default_card = {
+
+    return (
+        <>
+            <div>
+                <Router>
+                    <Navbar className='nav'/>
+
+                    <div className='app-container'>
+                        <Routes>
+                            <Route
+                                path='/'
+                                element={Cards()}
+                            />
+                            <Route
+                                path="/page_404"
+                                element={<Page_404/>}
+                            />
+                            <Route
+                                path="/*"
+                                element={<Navigate to="/page_404"/>}
+                            />
+                            {/*TODO: Get unique id URL to work*/}
+                            {/*<Route*/}
+                            {/*    path={`${match.path}/:topicId`}>*/}
+                            {/*</Route>*/}
+                            {/*<Route*/}
+                            {/*    path={match.path}*/}
+                            {/*/>*/}
+                        </Routes>
+                    </div>
+                </Router>
+            </div>
+        </>
+    );
+}
+
+
+//TODO: Refactor as another "Page"
+function Cards() {
+
+    const [userData, setUserData] = useState([])
+
+    useEffect(() => {
+        let arr = [];
+        for (let i = 0; i < 10; i++) {
+            arr.push(getCardInfo());
+        }
+
+        setUserData(arr)
+    }, []);
+
+
+    function fetchMoreData() {
+        console.log('info asked')
+
+        let arr = userData;
+        for (let i = 0; i < 10; i++) {
+            arr.push(getCardInfo());
+        }
+        setUserData(arr)
+    }
+
+    return (
+        <>
+            <div className='sidebar-holder'>
+                <ul>
+                    <il>Lorem ipsum dolor sit.</il>
+                    <il>Lorem ipsum dolor sit amet, consectetur adipisicing.</il>
+                    <il>Lorem ipsum dolor.</il>
+                    <il>Lorem ipsum dolor sit.</il>
+                    <il>Lorem ipsum dolor sit amet.</il>
+                </ul>
+            </div>
+
+            <InfiniteScroll
+                dataLength={userData.length}
+
+                //TODO: Get InfiniteScroll(next) to work or rewrite it
+                next={fetchMoreData}
+                hasMore={true}
+                loader={<h4>Loading...</h4>}
+                endMessage={
+                    <p style={{textAlign: 'center'}}>
+                        <b>Yay! You have seen it all</b>
+                    </p>
+                }
+            >
+                {userData.map((data) => <Card link='/' card_content={data}/>)}
+            </InfiniteScroll>
+        </>
+    );
+}
+
+
+//TODO: This will be request to DB
+function getCardInfo() {
+    console.log('info provided')
+    return {
+        id: Math.round(Math.random() * 0xFFFFFFFF),
         image_src: 'images/default_card.jpg',
         title: 'Lost a Dog!',
         description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. ' +
@@ -30,37 +131,6 @@ function App() {
         },
         tags: '#dog #lost #brown #toy_terier'
     }
-
-
-    return (
-        <>
-            <div>
-                <Router>
-                    <Navbar className='nav'/>
-                    <div className='app-container'>
-                        <div className='sidebar-holder'>
-                            <ul>
-                                <il>Lorem ipsum dolor sit.</il>
-                                <il>Lorem ipsum dolor sit amet, consectetur adipisicing.</il>
-                                <il>Lorem ipsum dolor.</il>
-                                <il>Lorem ipsum dolor sit.</il>
-                                <il>Lorem ipsum dolor sit amet.</il>
-                            </ul>
-                        </div>
-
-                        <Card link='/' card_content={default_card}/>
-                        <Card link='/' card_content={default_card}/>
-                        <Card link='/' card_content={default_card}/>
-                    </div>
-                    <Routes>
-                        <Route path='/' exact/>
-                    </Routes>
-                </Router>
-            </div>
-
-
-        </>
-    );
 }
 
 export default App;
