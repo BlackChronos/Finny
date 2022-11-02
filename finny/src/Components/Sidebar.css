@@ -1,0 +1,30 @@
+.sidebar-holder {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    height: 200px;
+    position: sticky;
+    top: 100px;
+}
+
+.sidebar-holder-mobile {
+    display: none;
+}
+
+.sidebar-holder ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+
+}
+
+.sidebar-holder li {
+    display: block;
+    list-style-type: disc;
+    margin: 1rem 5%;
+
+    border: 4px solid #646464;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 450px;
+}

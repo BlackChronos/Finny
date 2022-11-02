@@ -1,0 +1,18 @@
+.cards-layout {
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+    grid-auto-rows: minmax(250px, auto);
+    grid-column-gap: 10px;
+    grid-row-gap: 60px;
+
+}
+
+.cards-layout-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.cards-layout-mobile .card-container {
+    width: auto;
+}

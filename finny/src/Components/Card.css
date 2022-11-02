@@ -1,5 +1,6 @@
 :root {
     --card-color: #fff7f0;
+    --card-tag-color: #c5c5c5;
 }
 
 .card-container {
@@ -11,6 +12,7 @@
     width: 80%;
     max-width: 1200px;
 }
+
 .card-image {
     width: 100%;
     height: auto;
@@ -27,7 +29,7 @@
     min-height: 100px;
 }
 
-.tag-list{
+.tag-list {
     display: flex;
     flex-wrap: wrap;
 }
@@ -35,7 +37,7 @@
 .tag {
     position: relative;
     margin-right: 5px;
-    background: #cccccc;
+    background: var(--card-tag-color);
     border-radius: 50px;
     font-size: 0.75em;
     color: #fff;
@@ -45,26 +47,55 @@
 }
 
 .card-title {
-    font-size: 2em;
+    font-size: 1.5em;
 }
+
 .card-description {
     font-size: 1.25em;
 }
+
+.card-description.cut-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .author {
     display: flex;
     height: 80px;
+    text-decoration: none;
+    color: black;
 }
 
 .author-pfp {
     border-radius: 50%;
     width: auto;
+    aspect-ratio: 1/1;
     height: 90%;
     margin: 0 10px 10px;
+    cursor: pointer;
 }
+
 .card-author {
-    width: 75%;
+    width: 60%;
     font-size: 1.5em;
     align-self: center;
     margin: 0 10px 10px;
 
+    cursor: pointer;
+}
+
+.card-date {
+    width: 25%;
+    font-size: 1em;
+    align-self: center;
+    text-align: end;
+    padding: 10px 10px;
+    margin-right: 10px;
+
+    cursor: default;
 }
