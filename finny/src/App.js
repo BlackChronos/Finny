@@ -5,14 +5,16 @@ import Page_404 from "./Pages/Page404";
 import CardsPage from "./Pages/CardsPage";
 import {useEffect, useState} from "react";
 import PostPage from "./Pages/PostPage";
+import LogInPage from "./Pages/LogInPage";
+import useToken from "./Hooks/useToken";
 
 
 function App() {
-
+    const { token, setToken } = useToken();
     const [mobile, setMobile] = useState(window.innerWidth <= 800);
 
     const handleResize = () => {
-        setMobile(window.innerWidth <= 800);
+        setMobile(window.innerWidth <= 900);
     }
 
     useEffect(() => {
@@ -28,10 +30,10 @@ function App() {
     return (
         <>
             <Router>
-                <Navbar isMobile={mobile}/>
+                <Navbar isMobile={mobile} userToken={token}/>
 
                 <div className={mobile ? 'app-container mobile-version'
-                    : 'app-container'}>
+                                       : 'app-container'}>
                     <Routes>
                         <Route
                             path='/'
@@ -48,6 +50,13 @@ function App() {
                         <Route
                             path="posts/:postID"
                             element={<PostPage/>}
+                        />
+                        <Route
+                            path="login"
+                            element={
+                            token ? <Navigate to="/"/>
+                                  : <LogInPage setToken={setToken}/>
+                            }
                         />
                     </Routes>
                 </div>

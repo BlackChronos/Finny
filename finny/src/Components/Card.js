@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 import './Card.css'
 
-function Card({/*link,*/ card_content}) {
+function Card({isMobile, card_content}) {
 
     const id = card_content.id;
     const image_src = card_content.image_src;
@@ -21,22 +21,25 @@ function Card({/*link,*/ card_content}) {
     //TODO: Add mobile variant
 
     return (
-        <div className='card-container'>
+        <div className={isMobile? 'card-container mobile-version' : 'card-container'}>
             <Link to={"posts/" + id} className='card-header'>
-                <img src={image_src} alt='' className='card-image'/>
+                <img src={image_src} alt=''
+                     className={isMobile ? 'card-image mobile-version' : 'card-image'}/>
             </Link>
-            <div className="card-body">
-                <div className='tag-list'>
-                    {tagList.map(value => <i className='tag'>{value}</i>)}
+            <div className="card-body-container">
+                <div className="card-body">
+                    <div className='tag-list'>
+                        {tagList.map(value => <i className='tag'>#{value}</i>)}
+                    </div>
+                    <h4 className='card-title'>{title} {id}</h4>
+                    <p className='card-description cut-text'>{description}</p>
                 </div>
-                <h4 className='card-title'>{title} {id}</h4>
-                <p className='card-description cut-text'>{description}</p>
+                <Link to={author_link} className="author">
+                    <img src={pfp_src} alt='Author' className='author-pfp'/>
+                    <i className='card-author'>{author_name}</i>
+                    <span className='card-date'>{date}</span>
+                </Link>
             </div>
-            <Link to={author_link} className="author">
-                <img src={pfp_src} alt='Author' className='author-pfp'/>
-                <i className='card-author'>{author_name}</i>
-                <span className='card-date'>{date}</span>
-            </Link>
         </div>
     );
 }

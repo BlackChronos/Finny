@@ -9,14 +9,26 @@
     border-radius: 10px;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
     overflow: hidden;
-    width: 80%;
+    width: auto;
     max-width: 1200px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.card-container.mobile-version {
+    flex-direction: column;
+}
+
+.card-image.mobile-version {
+    width: 100%;
+    min-height: 200px;
+    max-height: 400px;
 }
 
 .card-image {
-    width: 100%;
-    height: auto;
-    max-height: 400px;
+    width: 400px;
+    height: 100%;
     object-fit: cover;
 }
 
@@ -56,7 +68,7 @@
 
 .card-description.cut-text {
     display: -webkit-box;
-    -webkit-line-clamp: 6;
+    -webkit-line-clamp: 8;
     -webkit-box-orient: vertical;
     -moz-box-orient: vertical;
 

@@ -46,7 +46,7 @@ export function CardsPage({isMobile}) {
                     </p>
                 }
             >
-                {userData.map((data) => <Card link='/' card_content={data}/>)}
+                {userData.map((data) => <Card isMobile={isMobile} card_content={data}/>)}
             </InfiniteScroll>
         </div>
     );
@@ -58,7 +58,7 @@ function getCardInfo() {
     console.log('info provided')
     return {
         id: Math.round(Math.random() * 0xFFFFFFFF),
-        image_src: 'images/default_card.jpg',
+        image_src: 'images/img.png',
         title: 'Lost a Dog!',
         description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. ' +
             'A, aspernatur debitis dicta dolor dolorem doloremque eos eveniet expedita' +
@@ -76,8 +76,8 @@ function getCardInfo() {
             name: 'Default Author Name',
             pfp_src: 'images/default_pfp.jpg'
         },
-        tags: '#dog #lost #brown #toy_terier',
-        date: dateFormat(new Date(), "mm/dd/yyyy")
+        tags: 'dog lost brown toy_terier',
+        date: dateFormat(new Date(), "mm/dd/yyyy hh:MM")
     }
 }
 
