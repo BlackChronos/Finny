@@ -2,31 +2,47 @@ import {useEffect, useState} from "react";
 import SideBar from "../Components/SideBar";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Card from "../Components/Card";
-import dateFormat from "dateformat";
 import "./CardsPage.css";
 
 export function CardsPage({isMobile}) {
 
-    const [userData, setUserData] = useState([])
+    const [userData, setUserData] = useState([]);
+    const [offset, setOffset] = useState(0);
+    const [count, setCount] = useState(0);
 
     useEffect(() => {
-        let arr = [];
-        for (let i = 0; i < 10; i++) {
-            arr.push(getCardInfo());
+        async function handleRequests (){
+            await fetchMoreData();
+            setCount(await requestPostsCount());
         }
-
-        setUserData(arr)
+        handleRequests().then();
     }, []);
 
 
-    function fetchMoreData() {
+    async function fetchMoreData() {
         console.log('info asked')
-
         let arr = userData;
-        for (let i = 0; i < 10; i++) {
-            arr.push(getCardInfo());
-        }
-        setUserData(arr)
+
+        let newArr = await requestPosts(10, offset)
+        newArr.map(data => {
+            arr.push(data);
+        })
+        setOffset(offset + 1);
+
+        console.log(arr);
+        setUserData(arr);
+    }
+
+    async function requestPosts(limit, offset) {
+        console.log(limit, offset);
+        let request = "limit=" + limit + "&offset=" + offset;
+        return fetch("http://localhost:8080/posts?" + request)
+            .then(response => response.json())
+    }
+
+    async function requestPostsCount() {
+        return fetch("http://localhost:8080/posts/count")
+            .then(value => value.json())
     }
 
     return (
@@ -35,10 +51,8 @@ export function CardsPage({isMobile}) {
 
             <InfiniteScroll
                 dataLength={userData.length}
-
-                //TODO: Get InfiniteScroll(next) to work or rewrite it
                 next={fetchMoreData}
-                hasMore={true}
+                hasMore={userData.length < count}
                 loader={<h4>Loading...</h4>}
                 endMessage={
                     <p style={{textAlign: 'center'}}>
@@ -50,35 +64,6 @@ export function CardsPage({isMobile}) {
             </InfiniteScroll>
         </div>
     );
-}
-
-
-//TODO: This will be request to DB
-function getCardInfo() {
-    console.log('info provided')
-    return {
-        id: Math.round(Math.random() * 0xFFFFFFFF),
-        image_src: 'images/img.png',
-        title: 'Lost a Dog!',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. ' +
-            'A, aspernatur debitis dicta dolor dolorem doloremque eos eveniet expedita' +
-            ' explicabo fugit hic inventore magni maiores, modi quas quia recusandae' +
-            ' sapiente sequi temporibus totam? Culpa, ipsum, optio. Cupiditate modi' +
-            ' numquam perferendis quasi sunt unde voluptate? Ea expedita, illo natus' +
-            ' numquam perferendis voluptas? Lorem ipsum dolor sit amet, consectetur' +
-            ' adipisicing elit. A, aspernatur debitis dicta dolor dolorem doloremque' +
-            ' eos eveniet expedita explicabo fugit hic inventore magni maiores, modi' +
-            ' quas quia recusandae sapiente sequi temporibus totam? Culpa, ipsum, optio.' +
-            ' Cupiditate modi numquam perferendis quasi sunt unde voluptate? Ea expedita,' +
-            ' illo natus numquam perferendis voluptas?',
-
-        author: {
-            name: 'Default Author Name',
-            pfp_src: 'images/default_pfp.jpg'
-        },
-        tags: 'dog lost brown toy_terier',
-        date: dateFormat(new Date(), "mm/dd/yyyy hh:MM")
-    }
 }
 
 export default CardsPage;

@@ -3,6 +3,13 @@
     --card-tag-color: #c5c5c5;
 }
 
+.mobile-version .card-header{
+    width: auto;
+}
+.card-header{
+    width: 35%;
+}
+
 .card-container {
     margin: 10px 10px 10px 15px;
     background-color: var(--card-color);
@@ -15,7 +22,13 @@
     flex-direction: row;
     flex-wrap: nowrap;
 }
+.card-body-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
 
+    justify-content: space-between;
+}
 .card-container.mobile-version {
     flex-direction: column;
 }
@@ -27,7 +40,8 @@
 }
 
 .card-image {
-    width: 400px;
+    /*width: 300px;*/
+    width: 100%;
     height: 100%;
     object-fit: cover;
 }
@@ -81,6 +95,7 @@
     height: 80px;
     text-decoration: none;
     color: black;
+    justify-content: space-between;
 }
 
 .author-pfp {

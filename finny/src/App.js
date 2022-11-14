@@ -1,5 +1,5 @@
 import Navbar from "./Components/Navbar";
-import {BrowserRouter as Router, Navigate, Route, Routes,} from "react-router-dom";
+import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
 import './App.css'
 import Page_404 from "./Pages/Page404";
 import CardsPage from "./Pages/CardsPage";
@@ -7,10 +7,11 @@ import {useEffect, useState} from "react";
 import PostPage from "./Pages/PostPage";
 import LogInPage from "./Pages/LogInPage";
 import useToken from "./Hooks/useToken";
+import RegisterPage from "./Pages/RegisterPage";
 
 
 function App() {
-    const { token, setToken } = useToken();
+    const {token, setToken} = useToken();
     const [mobile, setMobile] = useState(window.innerWidth <= 800);
 
     const handleResize = () => {
@@ -32,8 +33,9 @@ function App() {
             <Router>
                 <Navbar isMobile={mobile} userToken={token}/>
 
+
                 <div className={mobile ? 'app-container mobile-version'
-                                       : 'app-container'}>
+                    : 'app-container'}>
                     <Routes>
                         <Route
                             path='/'
@@ -46,6 +48,7 @@ function App() {
                         <Route
                             path="/*"
                             element={<Navigate to="/page_404"/>}
+
                         />
                         <Route
                             path="posts/:postID"
@@ -54,8 +57,15 @@ function App() {
                         <Route
                             path="login"
                             element={
-                            token ? <Navigate to="/"/>
-                                  : <LogInPage setToken={setToken}/>
+                                token ? <Navigate to="/"/>
+                                    : <LogInPage setToken={setToken}/>
+                            }
+                        />
+                        <Route
+                            path="register"
+                            element={
+                                token ? <Navigate to="/"/>
+                                    : <RegisterPage setToken={setToken}/>
                             }
                         />
                     </Routes>

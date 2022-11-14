@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 public class TagController {
     
@@ -19,15 +20,15 @@ public class TagController {
     @GetMapping("/tags")
     public List<Tag> getTags(@RequestParam(defaultValue = "25") int limit,
                              @RequestParam(defaultValue =  "0") int offset){
-        return tagRepo.findAll(PageRequest.of(offset, limit, Sort.by("content"))).getContent();
+        return tagRepo.findAll(PageRequest.of(offset, limit, Sort.by("content"))).stream().toList();
     }
     
     @GetMapping("/tags/{id}")
     @ResponseBody
-    public String getTagById(@PathVariable long id){
+    public Tag getTagById(@PathVariable long id){
         return tagRepo.findById(id).isPresent()
-             ? tagRepo.findById(id).get().getContent()
-             : String.valueOf(id);
+             ? tagRepo.findById(id).get()
+             : null;
     }
     
     @PutMapping("/tags/{id}")

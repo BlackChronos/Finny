@@ -10,7 +10,7 @@
 .cards-layout-mobile {
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: center;
 }
 
 .cards-layout-mobile .card-container {

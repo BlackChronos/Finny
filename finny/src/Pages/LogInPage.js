@@ -9,7 +9,6 @@ async function loginUser(login) {
         .then(response => response.json())
 }
 
-
 function LogInPage({setToken}) {
     const [hidden, setHidden] = useState(true);
     const [login, setLogin] = useState({
@@ -21,15 +20,11 @@ function LogInPage({setToken}) {
         setHidden(!hidden);
     }
 
-
-
     const handleSubmit = async e => {
         e.preventDefault();
         const token = await loginUser(login);
-        setToken({token: token.userId.toString()});
+        setToken({token: token.user.id.toString()});
     }
-
-
 
     return (
         <form className="login-container"

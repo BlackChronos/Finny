@@ -1,24 +1,25 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import Moment from "moment";
 
 import './Card.css'
 
 function Card({isMobile, card_content}) {
 
     const id = card_content.id;
-    const image_src = card_content.image_src;
+    const image_src = card_content.photoLink;
     const title = card_content.title;
     const description = card_content.description;
-    const author_name = card_content.author.name;
-    const pfp_src = card_content.author.pfp_src;
+    const author_name = card_content.author.firstName
+            + ' ' + card_content.author.lastName;
+    const pfp_src = card_content.author.photoLink;
     const tags = card_content.tags;
-    const date = card_content.date;
+    let date = card_content.date;
 
     let author_link = '/';
 
-    const tagList = tags.split(' ');
 
-    //TODO: Add mobile variant
+    date = Moment(date).format("MMM DD, yyyy HH:mm");
 
     return (
         <div className={isMobile? 'card-container mobile-version' : 'card-container'}>
@@ -29,7 +30,10 @@ function Card({isMobile, card_content}) {
             <div className="card-body-container">
                 <div className="card-body">
                     <div className='tag-list'>
-                        {tagList.map(value => <i className='tag'>#{value}</i>)}
+                        {tags.map(value => {
+                            value = value.content;
+                            return (<i className='tag'>#{value}</i>)
+                        })}
                     </div>
                     <h4 className='card-title'>{title} {id}</h4>
                     <p className='card-description cut-text'>{description}</p>

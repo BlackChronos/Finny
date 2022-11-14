@@ -49,7 +49,7 @@ function Navbar({isMobile, userToken}) {
                 <nav className={isMobile ? 'navbar mobile-version' : 'navbar'}>
                     <div className='navbar-container'>
                         <Link to="/" className='navbar-logo'>
-                            <img src={process.env.PUBLIC_URL + 'images/logo.png'}
+                            <img src={"https://cdn-icons-png.flaticon.com/512/188/188995.png"}
                                  alt='logo' className='logo-img'/>
                             <i className='logo-text'>Finny</i>
                         </Link>

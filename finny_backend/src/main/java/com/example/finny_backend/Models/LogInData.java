@@ -1,31 +1,45 @@
 package com.example.finny_backend.Models;
 
 import com.example.finny_backend.MyGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonTypeId;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 public class LogInData {
     @Id
-    @GeneratedValue(generator = MyGenerator.generatorName)
-    private long id;
+//    @GenericGenerator(name = "MyGenerator.generatorName",
+//                      strategy = "com.example.finny_backend.MyGenerator.java")
+//    @GeneratedValue(generator = MyGenerator.generatorName)
+    private long id = Math.abs(UUID.randomUUID().getLeastSignificantBits());
     
     @Column
     private String email;
     @Column
     private String password;
-    @Column
-    private long userId;
     
-    public LogInData(long id, String email, String password, long userId) {
+    @OneToOne
+    @JoinColumn
+    @JsonIgnoreProperties({"logInData", "posts"})
+    private User user;
+    
+    
+    public LogInData() {
+    }
+    
+    public LogInData(long id, String email, String password, User user) {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.userId = userId;
+        this.user = user;
     }
-    
-    public LogInData() {
+    public LogInData(String email, String password, User user) {
+        this.email = email;
+        this.password = password;
+        this.user = user;
     }
     
     public long getId() {
@@ -52,11 +66,11 @@ public class LogInData {
         this.password = password;
     }
     
-    public long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
     
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

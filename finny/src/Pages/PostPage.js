@@ -8,7 +8,9 @@ function PostPage() {
     return (
         <>
 
-            <h2>This Post's Id is 👉️ {postID}</h2>
+            <h3>
+                {postID}
+            </h3>
 
         </>
     );
