@@ -8,6 +8,7 @@ import PostPage from "./Pages/PostPage";
 import LogInPage from "./Pages/LogInPage";
 import useToken from "./Hooks/useToken";
 import RegisterPage from "./Pages/RegisterPage";
+import NewPostPage from "./Pages/NewPostPage";
 
 
 function App() {
@@ -39,7 +40,7 @@ function App() {
                     <Routes>
                         <Route
                             path='/'
-                            element={<CardsPage isMobile={mobile}/>}
+                            element={<CardsPage isMobile={mobile} token={token}/>}
                         />
                         <Route
                             path="/page_404"
@@ -66,6 +67,13 @@ function App() {
                             element={
                                 token ? <Navigate to="/"/>
                                     : <RegisterPage setToken={setToken}/>
+                            }
+                        />
+                        <Route
+                            path="new-post"
+                            element={
+                                token ? <NewPostPage token={token}/>
+                                      : <Navigate to="/"/>
                             }
                         />
                     </Routes>

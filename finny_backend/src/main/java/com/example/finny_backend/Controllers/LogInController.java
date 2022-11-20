@@ -5,10 +5,15 @@ import com.example.finny_backend.Models.LogInData;
 import com.example.finny_backend.Models.User;
 import com.example.finny_backend.Repos.LogInDataRepo;
 import com.example.finny_backend.Repos.UserRepo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -24,6 +29,28 @@ public class LogInController {
     public LogInData getLogInData(@RequestParam String email,
                                   @RequestParam String password){
         return logInDataRepo.findLogInDataByEmailAndPassword(email, password);
+    }
+    
+    @GetMapping("/logins")
+    public List<LogInData> getAllLogInData(){
+        return logInDataRepo.findAll();
+    }
+    
+    @GetMapping("/logins/emails")
+    public List<String> getAllEmails(){
+        List<String> emails = new ArrayList<>();
+        logInDataRepo.findAll().forEach(logInData -> {
+                emails.add(logInData.getEmail());
+        });
+        return emails;
+    }
+    
+    @GetMapping("/user")
+    public ResponseEntity<Boolean> logInDataExists(@RequestParam String email){
+        if(logInDataRepo.existsByEmail(email)) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
     }
     
     

@@ -1,15 +1,12 @@
-export default function validateInfo(values) {
+export default function validateInfo(values, data) {
     let errors = {};
-
-    // let checkUnique = async () =>{
-    //     await fetch()
-    // }
-
 
     if (!values.email) {
         errors.email = 'Email required';
     } else if (!/\S+@\S+\.\S+/.test(values.email)) {
         errors.email = 'Email address is invalid';
+    } else if (data.includes(values.email)) {
+        errors.email = 'Email address is taken';
     }
 
     if (!values.password) {

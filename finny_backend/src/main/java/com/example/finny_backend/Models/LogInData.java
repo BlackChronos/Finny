@@ -1,12 +1,8 @@
 package com.example.finny_backend.Models;
 
-import com.example.finny_backend.MyGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonTypeId;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 public class LogInData {
@@ -14,10 +10,12 @@ public class LogInData {
 //    @GenericGenerator(name = "MyGenerator.generatorName",
 //                      strategy = "com.example.finny_backend.MyGenerator.java")
 //    @GeneratedValue(generator = MyGenerator.generatorName)
-    private long id = Math.abs(UUID.randomUUID().getLeastSignificantBits());
+    @GeneratedValue
+    private long id/* = Math.abs(UUID.randomUUID().getLeastSignificantBits())*/;
     
-    @Column
+    @Column(unique = true)
     private String email;
+    
     @Column
     private String password;
     

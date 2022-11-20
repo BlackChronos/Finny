@@ -25,7 +25,7 @@ public class Post {
     
     @ManyToOne
     @JoinColumn
-    @JsonIgnoreProperties({"posts","phoneNumber","logInData"})
+    @JsonIgnoreProperties({"posts","logInData"})
     private User author;
     
     @Column
@@ -113,5 +113,16 @@ public class Post {
         this.tags = tags;
     }
     
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
+        tag.getPosts().add(this);
+    }
     
+    public void removeTag(long tagId) {
+        Tag tag = this.tags.stream().filter(t -> t.getId() == tagId).findFirst().orElse(null);
+        if (tag != null) {
+            this.tags.remove(tag);
+            tag.getPosts().remove(this);
+        }
+    }
 }

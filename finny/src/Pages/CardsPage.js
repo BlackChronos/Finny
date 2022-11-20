@@ -4,26 +4,28 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Card from "../Components/Card";
 import "./CardsPage.css";
 
-export function CardsPage({isMobile}) {
+export function CardsPage({isMobile, token}) {
 
     const [userData, setUserData] = useState([]);
+    const [tag, setTag] = useState(-1);
     const [offset, setOffset] = useState(0);
     const [count, setCount] = useState(0);
 
     useEffect(() => {
-        async function handleRequests (){
+        async function handleRequests() {
             await fetchMoreData();
-            setCount(await requestPostsCount());
+            setCount(await requestPostsCount(tag));
         }
+
         handleRequests().then();
-    }, []);
+    }, [tag]);
 
 
     async function fetchMoreData() {
         console.log('info asked')
         let arr = userData;
 
-        let newArr = await requestPosts(10, offset)
+        let newArr = await requestPosts(10, offset, tag)
         newArr.map(data => {
             arr.push(data);
         })
@@ -33,21 +35,32 @@ export function CardsPage({isMobile}) {
         setUserData(arr);
     }
 
-    async function requestPosts(limit, offset) {
-        console.log(limit, offset);
+    async function requestPosts(limit, offset, tag) {
+        console.log(limit, offset, tag);
         let request = "limit=" + limit + "&offset=" + offset;
-        return fetch("http://localhost:8080/posts?" + request)
-            .then(response => response.json())
+        if (tag === -1)
+            return fetch("http://localhost:8080/posts?" + request)
+                .then(response => response.json())
+        else {
+            request += "&tag=" + tag;
+            return fetch("http://localhost:8080/posts/tags?" + request)
+                .then(response => response.json())
+        }
     }
 
-    async function requestPostsCount() {
-        return fetch("http://localhost:8080/posts/count")
-            .then(value => value.json())
+    async function requestPostsCount(tag) {
+        if (tag === -1)
+            return fetch("http://localhost:8080/posts/count")
+                .then(value => value.json())
+        else
+            return fetch("http://localhost:8080/posts/tags/count?tag=" + tag)
+                .then(value => value.json())
     }
 
     return (
         <div className={isMobile ? "cards-layout-mobile" : "cards-layout"}>
-            <SideBar isMobile={isMobile}/>
+            <SideBar isMobile={isMobile} setTag={setTag} setOffset={setOffset}
+                     setCount={setCount} setUserData={setUserData} token={token}/>
 
             <InfiniteScroll
                 dataLength={userData.length}

@@ -11,4 +11,5 @@ public interface LogInDataRepo extends JpaRepository<LogInData, Long> {
     @Query("SELECT u FROM LogInData u WHERE u.email = ?1 and u.password = ?2")
     LogInData findLogInDataByEmailAndPassword(String email, String password);
     
+    boolean existsByEmail(String email);
 }

@@ -18,7 +18,8 @@ public class User {
     
     @Id
 //    @GeneratedValue(generator = MyGenerator.generatorName)
-    private long id = Math.abs(UUID.randomUUID().getLeastSignificantBits());
+    @GeneratedValue
+    private long id/* = Math.abs(UUID.randomUUID().getLeastSignificantBits())*/;
     
     @Column
     private String firstName;
@@ -102,5 +103,12 @@ public class User {
     
     public void setPosts(Set<Post> posts) {
         this.posts = posts;
+    }
+    
+    public void removePost(long postId) {
+        Post post = this.posts.stream().filter(t -> t.getId() == postId).findFirst().orElse(null);
+        if (post != null) {
+            this.posts.remove(post);
+        }
     }
 }

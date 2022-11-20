@@ -3,6 +3,7 @@ package com.example.finny_backend.Controllers;
 
 import com.example.finny_backend.Models.Tag;
 import com.example.finny_backend.Repos.TagRepo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -18,6 +19,7 @@ public class TagController {
     private TagRepo tagRepo;
     
     @GetMapping("/tags")
+    @JsonIgnoreProperties("tags")
     public List<Tag> getTags(@RequestParam(defaultValue = "25") int limit,
                              @RequestParam(defaultValue =  "0") int offset){
         return tagRepo.findAll(PageRequest.of(offset, limit, Sort.by("content"))).stream().toList();

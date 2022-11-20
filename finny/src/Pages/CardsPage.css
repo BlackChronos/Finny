@@ -6,6 +6,12 @@
     grid-row-gap: 60px;
 
 }
+.cards-layout b{
+    font-size: 2rem;
+}
+.cards-layout-mobile b{
+    font-size: 1.5rem;
+}
 
 .cards-layout-mobile {
     display: flex;

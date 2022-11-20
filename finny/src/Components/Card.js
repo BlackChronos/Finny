@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import Moment from "moment";
 
 import './Card.css'
+import Popup from "reactjs-popup";
 
 function Card({isMobile, card_content}) {
 
@@ -11,8 +12,9 @@ function Card({isMobile, card_content}) {
     const title = card_content.title;
     const description = card_content.description;
     const author_name = card_content.author.firstName
-            + ' ' + card_content.author.lastName;
+        + ' ' + card_content.author.lastName;
     const pfp_src = card_content.author.photoLink;
+    const phone = card_content.author.phoneNumber;
     const tags = card_content.tags;
     let date = card_content.date;
 
@@ -21,30 +23,46 @@ function Card({isMobile, card_content}) {
 
     date = Moment(date).format("MMM DD, yyyy HH:mm");
 
+    const triggerPopup = open => (
+        <button className="button">Trigger - {open ? 'Opened' : 'Closed'}</button>
+    )
+
     return (
-        <div className={isMobile? 'card-container mobile-version' : 'card-container'}>
-            <Link to={"posts/" + id} className='card-header'>
-                <img src={image_src} alt=''
-                     className={isMobile ? 'card-image mobile-version' : 'card-image'}/>
-            </Link>
-            <div className="card-body-container">
-                <div className="card-body">
-                    <div className='tag-list'>
-                        {tags.map(value => {
-                            value = value.content;
-                            return (<i className='tag'>#{value}</i>)
-                        })}
-                    </div>
-                    <h4 className='card-title'>{title} {id}</h4>
-                    <p className='card-description cut-text'>{description}</p>
-                </div>
-                <Link to={author_link} className="author">
-                    <img src={pfp_src} alt='Author' className='author-pfp'/>
-                    <i className='card-author'>{author_name}</i>
-                    <span className='card-date'>{date}</span>
+        <>
+            <div className={isMobile ? 'card-container mobile-version' : 'card-container'}>
+                <Link to={"posts/" + id} className='card-header'>
+                    <img src={image_src} alt=''
+                         className={isMobile ? 'card-image mobile-version' : 'card-image'}/>
                 </Link>
+                <div className="card-body-container">
+                    <div className="card-body">
+                        <div className='tag-list'>
+                            {tags.map(value => {
+                                value = value.content;
+                                return (<i className='tag'>#{value}</i>)
+                            })}
+                        </div>
+                        <h4 className='card-title'>{title}</h4>
+                        <p className='card-description cut-text'>{description}</p>
+                    </div>
+                    <Popup
+                        trigger={() => (
+                            <Link to={author_link} className="author">
+                                <img src={pfp_src} alt='Author' className='author-pfp'/>
+                                <i className='card-author'>{author_name}</i>
+                                <span className='card-date'>{date}</span>
+                            </Link>
+                        )}
+                        position="center center"
+                        closeOnDocumentClick
+                    >
+                        <span>Contact me:</span>
+                        <textarea readOnly={true} value={phone}></textarea>
+                    </Popup>
+
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 

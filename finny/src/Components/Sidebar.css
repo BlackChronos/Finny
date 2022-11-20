@@ -5,6 +5,8 @@
     position: sticky;
     top: 100px;
     margin-left: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar-holder-mobile {
@@ -16,7 +18,8 @@
 
 }
 
-.sidebar-holder li {
+.sidebar-holder li,
+.new-post-container li{
     position: relative;
     background: var(--card-tag-color);
     border-radius: 50px;
@@ -34,9 +37,63 @@
     display: inline-block;
     padding: 5px;
 }
+
 #multiselectContainerReact {
     width: 80%;
     margin: auto;
     max-width: 600px;
 }
 
+.new-post-container #multiselectContainerReact span{
+    position: relative;
+}
+
+#multiselectContainerReact span{
+    position: absolute;
+    top: 30%
+}
+
+#multiselectContainerReact span img{
+    filter: invert(100%);
+}
+
+#search_input{
+    background-color: white;
+}
+
+input[type = button].add-post{
+    width: 80%;
+    align-self: center;
+    justify-self: center;
+}
+
+textarea.description-input{
+    height: 10rem;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    border-radius: 8px;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.new-post-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.new-post-container *{
+    width: 80%;
+    max-width: 900px;
+}
+
+.new-post-container *{
+    width: 80%;
+    max-width: 900px;
+}
+.new-post-container #multiselectContainerReact span{
+    display: inline-block;
+    padding: 5px;
+    width: fit-content;
+}

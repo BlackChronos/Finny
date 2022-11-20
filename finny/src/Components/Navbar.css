@@ -107,6 +107,8 @@
 .user-pfp {
     position: relative;
     width: var(--icon-size);
+    height: var(--icon-size);
+    object-fit: cover;
     border-radius: 50%;
     align-self: center;
     box-shadow: 0 0 5px 1px #a88460;

@@ -3,16 +3,6 @@ import {Link, useNavigate} from "react-router-dom";
 
 import './Navbar.css';
 
-// async function getUserInfo(token) {
-//     if(!token) return null;
-//     console.log(token);
-//     let request = token;
-//     let response = await fetch("http://localhost:8080/users/"+request)
-//         .then(response => response.json());
-//
-//     return response;
-// }
-
 
 function Navbar({isMobile, userToken}) {
     const [logIn, setLogIn] = useState({});
