@@ -83,17 +83,17 @@ textarea.description-input{
     align-items: center;
 }
 
-.new-post-container *{
+.new-post-container * {
     width: 80%;
     max-width: 900px;
 }
 
-.new-post-container *{
-    width: 80%;
-    max-width: 900px;
-}
-.new-post-container #multiselectContainerReact span{
+.new-post-container #multiselectContainerReact span {
     display: inline-block;
     padding: 5px;
     width: fit-content;
+}
+
+.new-post-container .searchWrapper {
+    border: none;
 }

@@ -70,7 +70,7 @@ function RegisterPage({setToken}) {
                     className='title-input'
                     type='text'
                     name='title'
-                    placeholder='Enter your first name'
+                    placeholder='Enter post title'
                     value={Post.values.title}
                     onChange={Post.handleChange}
                 />
@@ -82,7 +82,7 @@ function RegisterPage({setToken}) {
                 <textarea
                     className="description-input"
                     name="description"
-                    placeholder='Enter your last name'
+                    placeholder='Enter post description'
                     value={Post.values.lastName}
                     onChange={Post.handleChange}/>
                 {Post.errors.description && <p>{Post.errors.description}</p>}

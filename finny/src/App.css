@@ -14,7 +14,7 @@ body {
     --icon-size: 50px;
     font-size: 0.75rem;
 
-    box-shadow: 0 0 5px 5px var(--navbar-colour), 0 0 15px 15px #ffb5da;
+    box-shadow: 0 0 5px 5px var(--navbar-color), 0 0 15px 15px #ffb5da;
 }
 
 .app-container {

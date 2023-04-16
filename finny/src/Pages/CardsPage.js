@@ -71,8 +71,7 @@ export function CardsPage({isMobile, token}) {
                     <p style={{textAlign: 'center'}}>
                         <b>Yay! You have seen it all</b>
                     </p>
-                }
-            >
+                }>
                 {userData.map((data) => <Card isMobile={isMobile} card_content={data}/>)}
             </InfiniteScroll>
         </div>

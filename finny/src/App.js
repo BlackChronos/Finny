@@ -9,6 +9,7 @@ import LogInPage from "./Pages/LogInPage";
 import useToken from "./Hooks/useToken";
 import RegisterPage from "./Pages/RegisterPage";
 import NewPostPage from "./Pages/NewPostPage";
+import {HomePage} from "./Pages/HomePage";
 
 
 function App() {
@@ -40,6 +41,10 @@ function App() {
                     <Routes>
                         <Route
                             path='/'
+                            element={<HomePage isMobile={mobile} token={token}/>}
+                        />
+                        <Route
+                            path='/feed'
                             element={<CardsPage isMobile={mobile} token={token}/>}
                         />
                         <Route

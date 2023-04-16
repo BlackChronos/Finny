@@ -18,14 +18,10 @@ function Card({isMobile, card_content}) {
     const tags = card_content.tags;
     let date = card_content.date;
 
-    let author_link = '/';
+    let author_link = '/feed';
 
 
     date = Moment(date).format("MMM DD, yyyy HH:mm");
-
-    const triggerPopup = open => (
-        <button className="button">Trigger - {open ? 'Opened' : 'Closed'}</button>
-    )
 
     return (
         <>

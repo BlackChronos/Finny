@@ -2,7 +2,7 @@
 
     --navbar-height: 80px;
     --icon-size: 75px;
-    --navbar-colour: wheat;
+    --navbar-color: wheat;
     --logo-color: #ffc9d3;
 
 }
@@ -18,7 +18,7 @@
     --navbar-height: 80px;
     --icon-size: 75px;
 
-    background: var(--navbar-colour);
+    background: var(--navbar-color);
     height: var(--navbar-height);
     position: fixed;
     width: 100%;
@@ -30,7 +30,7 @@
     max-width: 1500px;
     padding-bottom: 2px;
     padding-top: 2px;
-    box-shadow: 0 0 5px 10px var(--navbar-colour), 0 0 20px 20px #ffb5da;
+    box-shadow: 0 0 5px 10px var(--navbar-color), 0 0 20px 20px #ffb5da;
 
     transition: all 0.4s ease-out;
 
@@ -41,7 +41,7 @@
     --icon-size: 50px;
     font-size: 0.75rem;
 
-    box-shadow: 0 0 5px 5px var(--navbar-colour), 0 0 15px 15px #ffb5da;
+    box-shadow: 0 0 5px 5px var(--navbar-color), 0 0 15px 15px #ffb5da;
 }
 
 
