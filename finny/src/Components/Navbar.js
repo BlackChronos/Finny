@@ -1,55 +1,72 @@
-import React, {useState, useEffect} from 'react';
-import {Link} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {Link, useNavigate} from "react-router-dom";
 
 import './Navbar.css';
 
-function Navbar() {
-    const [logIn, setLogIn] = useState(() => {
-        return {isLogged: false}
-    });
-    const [smallNav, setNav]= useState(window.innerWidth <= 800);
 
-    const handleResize = () => {
-        setNav(window.innerWidth <= 800);
+function Navbar({isMobile, userToken}) {
+    const [logIn, setLogIn] = useState({});
+
+    useEffect(() =>{
+        let request = userToken;
+
+        const fetchData = async () => {
+            try {
+                const response = await fetch("http://localhost:8080/users/" + request);
+                const json = await response.json();
+                setLogIn(json)
+                console.log(json);
+                console.log(json.firstName);
+            } catch (error) {
+                console.log("error", error);
+            }
+        };
+        fetchData();
+    }, [userToken])
+
+    let navigate = useNavigate();
+    const toLogIn = () =>{
+        navigate("/login");
+    }
+    const toSignIn = () =>{
+        navigate("/register");
     }
 
-    useEffect(() => {
-        window.addEventListener('resize', handleResize);
-        console.log('hi there');
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        }
-    }, [])
 
     return (
-        <div className='center'>
-        <nav className={smallNav ? 'navbar small-nav' : 'navbar'}>
-            <div className='navbar-container'>
-                <Link to="/" className='navbar-logo'>
-                    <img src='images/logo.png' alt='logo' className='logo-img'/>
-                    <i className='logo-text'>Finny</i>
-                </Link>
+        <>
+            <div className='center'>
+                <nav className={isMobile ? 'navbar mobile-version' : 'navbar'}>
+                    <div className='navbar-container'>
+                        <Link to="/" className='navbar-logo'>
+                            <img src={"https://cdn-icons-png.flaticon.com/512/188/188995.png"}
+                                 alt='logo' className='logo-img'/>
+                            <i className='logo-text'>Finny</i>
+                        </Link>
+                    </div>
+                    <div className={logIn.firstName
+                                 ? 'account-container'
+                                 : 'account-container log-in'}>
+                        {!logIn.firstName ?
+                            <>
+                                <button className='navbar-login'
+                                        onClick={toLogIn}>Log in
+                                </button>
+                                <button className='navbar-signin'
+                                        onClick={toSignIn}>Sign in
+                                </button>
+                            </>
+                            :
+                            <>
+                                <img src={logIn.photoLink} alt='Profile Photo'
+                                     className='user-pfp'/>
+                                <i className='user-name'>{logIn.firstName + " " + logIn.lastName}</i>
+                            </>
+                        }
+                    </div>
+                </nav>
             </div>
-            <div className={logIn.isLogged ? 'account-container':
-                            'account-container log-in'}>
-                {!logIn.isLogged ?
-                    <>
-                        <button className='navbar-login' onClick={
-                            () => {setLogIn({isLogged: true, userName: 'Default User Name'})}
-                        }>Log in</button>
-                        <button className='navbar-signin'>Sign in</button>
-                    </>
-                    :
-                    <>
-                        <img src='images/default_pfp.jpg' alt='Profile Photo'
-                             className='user-pfp'/>
-                        <i className='user-name'>{logIn.userName}</i>
-                    </>
-                }
-            </div>
-        </nav>
-        </div>
+        </>
     );
 }
 

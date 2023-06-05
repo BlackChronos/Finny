@@ -1,0 +1,105 @@
+.home-page {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+    color: #333;
+}
+
+.home-page input {
+    padding: 5px;
+    margin: 15px auto;
+    max-width: 300px;
+    background-color: #ffc2ce;
+    border: 1px solid #bbbbbb;
+    border-radius: 8px;
+}
+
+h1.greeting {
+    font-size: 2em;
+    margin: auto;
+    text-shadow: 3px 3px 3px wheat;
+}
+
+.about-us {
+    display: flex;
+    flex-direction: inherit;
+}
+
+.about-us * {
+    padding: 5px;
+}
+
+.img-split {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.img-split img {
+    pointer-events: none;
+    height: auto;
+    min-width: 300px;
+    width: 45%;
+    z-index: -1;
+}
+
+.img-split div {
+    min-width: 300px;
+    width: 45%;
+}
+
+h2 {
+    margin: 2.5rem auto 5px auto;
+    font-style: italic;
+    text-shadow: 2px 2px 2px wheat;
+}
+
+p {
+    font-size: 1rem;
+    transition: all ease-in-out 0.3s;
+}
+
+p:hover {
+    font-size: 1.25rem;
+}
+
+h3 {
+    margin-left: 3ch;
+    font-style: italic;
+    text-shadow: 1px 1px 1px wheat;
+}
+
+.dev-cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.dev-card {
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    min-width: 300px;
+    max-width: 400px;
+    height: 200px;
+    border: 1px solid #bbbbbb;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.dev-card textarea {
+    margin-top: auto;
+    justify-self: end;
+}
+
+.dev-card h3 {
+    margin: 0 auto;
+    text-shadow: 1px 1px 1px wheat;
+}
+
+.dev-card p {
+    margin: auto;
+    text-align: center;
+}

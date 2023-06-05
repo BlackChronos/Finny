@@ -1,66 +1,92 @@
 import Navbar from "./Components/Navbar";
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-} from "react-router-dom";
+import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
 import './App.css'
-import Card from "./Components/Card";
+import Page_404 from "./Pages/Page404";
+import CardsPage from "./Pages/CardsPage";
+import {useEffect, useState} from "react";
+import PostPage from "./Pages/PostPage";
+import LogInPage from "./Pages/LogInPage";
+import useToken from "./Hooks/useToken";
+import RegisterPage from "./Pages/RegisterPage";
+import NewPostPage from "./Pages/NewPostPage";
+import {HomePage} from "./Pages/HomePage";
 
 
 function App() {
-    const default_card = {
-        image_src: 'images/default_card.jpg',
-        title: 'Lost a Dog!',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. ' +
-            'A, aspernatur debitis dicta dolor dolorem doloremque eos eveniet expedita' +
-            ' explicabo fugit hic inventore magni maiores, modi quas quia recusandae' +
-            ' sapiente sequi temporibus totam? Culpa, ipsum, optio. Cupiditate modi' +
-            ' numquam perferendis quasi sunt unde voluptate? Ea expedita, illo natus' +
-            ' numquam perferendis voluptas? Lorem ipsum dolor sit amet, consectetur' +
-            ' adipisicing elit. A, aspernatur debitis dicta dolor dolorem doloremque' +
-            ' eos eveniet expedita explicabo fugit hic inventore magni maiores, modi' +
-            ' quas quia recusandae sapiente sequi temporibus totam? Culpa, ipsum, optio.' +
-            ' Cupiditate modi numquam perferendis quasi sunt unde voluptate? Ea expedita,' +
-            ' illo natus numquam perferendis voluptas?',
+    const {token, setToken} = useToken();
+    const [mobile, setMobile] = useState(window.innerWidth <= 800);
 
-        author: {
-            name: 'Default Author Name',
-            pfp_src: 'images/default_pfp.jpg'
-        },
-        tags: '#dog #lost #brown #toy_terier'
+    const handleResize = () => {
+        setMobile(window.innerWidth <= 900);
     }
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        console.log('hi there');
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, [])
 
 
     return (
         <>
-            <div>
-                <Router>
-                    <Navbar className='nav'/>
-                    <div className='app-container'>
-                        <div className='sidebar-holder'>
-                            <ul>
-                                <il>Lorem ipsum dolor sit.</il>
-                                <il>Lorem ipsum dolor sit amet, consectetur adipisicing.</il>
-                                <il>Lorem ipsum dolor.</il>
-                                <il>Lorem ipsum dolor sit.</il>
-                                <il>Lorem ipsum dolor sit amet.</il>
-                            </ul>
-                        </div>
+            <Router>
+                <Navbar isMobile={mobile} userToken={token}/>
 
-                        <Card link='/' card_content={default_card}/>
-                        <Card link='/' card_content={default_card}/>
-                        <Card link='/' card_content={default_card}/>
-                    </div>
+
+                <div className={mobile ? 'app-container mobile-version'
+                    : 'app-container'}>
                     <Routes>
-                        <Route path='/' exact/>
+                        <Route
+                            path='/'
+                            element={<HomePage isMobile={mobile} token={token}/>}
+                        />
+                        <Route
+                            path='/feed'
+                            element={<CardsPage isMobile={mobile} token={token}/>}
+                        />
+                        <Route
+                            path="/page_404"
+                            element={<Page_404/>}
+                        />
+                        <Route
+                            path="/*"
+                            element={<Navigate to="/page_404"/>}
+
+                        />
+                        <Route
+                            path="posts/:postID"
+                            element={<PostPage/>}
+                        />
+                        <Route
+                            path="login"
+                            element={
+                                token ? <Navigate to="/"/>
+                                    : <LogInPage setToken={setToken}/>
+                            }
+                        />
+                        <Route
+                            path="register"
+                            element={
+                                token ? <Navigate to="/"/>
+                                    : <RegisterPage setToken={setToken}/>
+                            }
+                        />
+                        <Route
+                            path="new-post"
+                            element={
+                                token ? <NewPostPage token={token}/>
+                                      : <Navigate to="/"/>
+                            }
+                        />
                     </Routes>
-                </Router>
-            </div>
-
-
+                </div>
+            </Router>
         </>
     );
 }
+
 
 export default App;

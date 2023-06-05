@@ -1,0 +1,24 @@
+.cards-layout {
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+    grid-auto-rows: minmax(250px, auto);
+    grid-column-gap: 10px;
+    grid-row-gap: 60px;
+
+}
+.cards-layout b{
+    font-size: 2rem;
+}
+.cards-layout-mobile b{
+    font-size: 1.5rem;
+}
+
+.cards-layout-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cards-layout-mobile .card-container {
+    width: auto;
+}

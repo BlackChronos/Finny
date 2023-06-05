@@ -1,61 +1,65 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import Moment from "moment";
 
 import './Card.css'
+import Popup from "reactjs-popup";
 
-function Card({link, card_content}) {
+function Card({isMobile, card_content}) {
 
-    const image_src = card_content.image_src;
+    const id = card_content.id;
+    const image_src = card_content.photoLink;
     const title = card_content.title;
     const description = card_content.description;
-    const author_name = card_content.author.name;
-    const pfp_src = card_content.author.pfp_src;
+    const author_name = card_content.author.firstName
+        + ' ' + card_content.author.lastName;
+    const pfp_src = card_content.author.photoLink;
+    const phone = card_content.author.phoneNumber;
     const tags = card_content.tags;
+    let date = card_content.date;
 
-    const tagList = tags.split(' ');
+    let author_link = '/feed';
+
+
+    date = Moment(date).format("MMM DD, yyyy HH:mm");
 
     return (
-        <div className='card-container'>
-            <Link to={link} className='card-header'>
-                <img src={image_src} alt='' className='card-image'/>
-            </Link>
-            <div className="card-body">
-                <div className='tag-list'>
-                    {tagList.map(value => <i className='tag'>{value}</i>)}
+        <>
+            <div className={isMobile ? 'card-container mobile-version' : 'card-container'}>
+                <Link to={"posts/" + id} className='card-header'>
+                    <img src={image_src} alt=''
+                         className={isMobile ? 'card-image mobile-version' : 'card-image'}/>
+                </Link>
+                <div className="card-body-container">
+                    <div className="card-body">
+                        <div className='tag-list'>
+                            {tags.map(value => {
+                                value = value.content;
+                                return (<i className='tag'>#{value}</i>)
+                            })}
+                        </div>
+                        <h4 className='card-title'>{title}</h4>
+                        <p className='card-description cut-text'>{description}</p>
+                    </div>
+                    <Popup
+                        trigger={() => (
+                            <Link to={author_link} className="author">
+                                <img src={pfp_src} alt='Author' className='author-pfp'/>
+                                <i className='card-author'>{author_name}</i>
+                                <span className='card-date'>{date}</span>
+                            </Link>
+                        )}
+                        position="center center"
+                        closeOnDocumentClick
+                    >
+                        <span>Contact me:</span>
+                        <textarea readOnly={true} value={phone}></textarea>
+                    </Popup>
+
                 </div>
-                <h4 className='card-title'>{title}</h4>
-                <p className='card-description'>{description}</p>
             </div>
-            <div class="author">
-                <img src={pfp_src} alt='Author' className='author-pfp'/>
-                <i className='card-author'>{author_name}</i>
-            </div>
-        </div>
+        </>
     );
 }
 
 export default Card;
-
-
-//<div class="card">
-//     <div class="card-header">
-//       <img src="https://www.newsbtc.com/wp-content/uploads/2020/06/mesut-kaya-LcCdl__-kO0-unsplash-scaled.jpg" alt="ballons" />
-//     </div>
-//     <div class="card-body">
-//       <span class="tag tag-purple">Popular</span>
-//       <h4>
-//         How to Keep Going When You Don’t Know What’s Next
-//       </h4>
-//       <p>
-//         The future can be scary, but there are ways to
-//         deal with that fear.
-//       </p>
-//       <div class="user">
-//         <img src="https://lh3.googleusercontent.com/ogw/ADGmqu8sn9zF15pW59JIYiLgx3PQ3EyZLFp5Zqao906l=s32-c-mo" alt="user" />
-//         <div class="user-info">
-//           <h5>Eyup Ucmaz</h5>
-//           <small>Yesterday</small>
-//         </div>
-//       </div>
-//     </div>
-//   </div>
